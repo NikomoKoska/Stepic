@@ -1,4 +1,4 @@
-input_string = input('Enter string ')
+input_string = input()
 str_len = len(input_string)
 result_string = ''
 num = 1
