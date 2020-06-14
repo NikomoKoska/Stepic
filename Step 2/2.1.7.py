@@ -1,20 +1,22 @@
+from collections import deque
 
 # Функция поиска значения в графе
-def search_child(graph, child, parent, ):
-    if child == parent:
+def search_child(graph, child, excepion_list):
+    if child in excepion_list:
         return True
 
-    searched = []
-    search_list = deque()
-    search_list += graph[child]
-    while search_list:
-        next_parent = search_list.popleft()
-        if next_parent not in searched:
-            if next_parent == parent:
-                return True
-            else:
-                search_list += graph[next_parent]
-                searched.append(next_parent)
+    for main_exception in excepion_list:
+        searched = []
+        search_list = deque()
+        search_list += graph[child]
+        while search_list:
+            next_parent = search_list.popleft()
+            if next_parent not in searched:
+                if next_parent == main_exception:
+                    return True
+                else:
+                    search_list += graph[next_parent]
+                    searched.append(next_parent)
     return False
 
 # Ввод начальных данных
@@ -33,8 +35,8 @@ for _ in range(num):
 num = int(input())
 exception_list = []
 for _ in range(num):
-    next_exception = input().split()
-    if search_child(graph, child, parent):
-        print('Yes')
+    next_exception = input()
+    if search_child(graph, next_exception, exception_list):
+        print(next_exception)
     else:
-        print('No')
+        exception_list.append(next_exception)
